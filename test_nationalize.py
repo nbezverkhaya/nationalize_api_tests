@@ -11,7 +11,7 @@ def _validate_response(data) -> list[NationalityPrediction]:
 
 def test_single_name_batch_ussage_success(api_client, base_url):
     name = "michael"
-    params = {"name":name}
+    params = {"name[]":name}
     r = api_client.get(base_url, params=params)
     assert r.status_code == 200
 
@@ -22,3 +22,34 @@ def test_single_name_batch_ussage_success(api_client, base_url):
     assert isinstance(items[0].country, list)
     for c in items[0].country:
         assert isinstance(c, Country)
+
+def test_multiple_names_batch_ussage_success(api_client, base_url):
+    names = ["metthew", "nataliie", "markus"]
+    params = {"name[]": names}
+    r = api_client.get(base_url, params=params)
+    assert r.status_code == 200
+
+    items = _validate_response(r.json())
+    assert len(names) == len(items)
+    returned_names = {p.name for p in items}
+    for name in names:
+        assert name in returned_names
+
+    print(returned_names)
+
+# пропрацювати
+def test_country_id_applied_schema_ok(api_client, base_url):
+    params = {"name[]": ["michael", "anna"], "country_id": "US"}
+    r = api_client.get(base_url, params=params)
+    assert r.status_code == 200
+
+    items = _validate_response(r.json())
+    assert len(items) == 2
+    for it in items:
+        assert isinstance(it.country, list)
+
+def test_no_name_parameter_negative(api_client, base_url):
+    r = api_client.get(base_url)
+    assert r.status_code in (400, 422)
+    body = r.json()
+    assert isinstance(body, dict) and "error" in body
