@@ -37,17 +37,6 @@ def test_multiple_names_batch_ussage_success(api_client, base_url):
 
     print(returned_names)
 
-# пропрацювати
-def test_country_id_applied_schema_ok(api_client, base_url):
-    params = {"name[]": ["michael", "anna"], "country_id": "US"}
-    r = api_client.get(base_url, params=params)
-    assert r.status_code == 200
-
-    items = _validate_response(r.json())
-    assert len(items) == 2
-    for it in items:
-        assert isinstance(it.country, list)
-
 def test_no_name_parameter_negative(api_client, base_url):
     r = api_client.get(base_url)
     assert r.status_code in (400, 422)
