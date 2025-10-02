@@ -9,3 +9,7 @@ def api_client() -> requests.Session:
     yield session
     session.close()
 
+@pytest.fixture(scope="session")
+def base_url() -> str:
+    return BASE_URL
+
