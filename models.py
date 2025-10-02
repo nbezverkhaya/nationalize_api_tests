@@ -6,3 +6,8 @@ class Country(BaseModel):
     country_id: str
     probability: float
 
+class NationalityPrediction(BaseModel):
+    count: int
+    name:str
+    country: List[Country]
+
