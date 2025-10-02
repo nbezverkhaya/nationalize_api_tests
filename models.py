@@ -1,21 +1,15 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, RootModel, constr, confloat
 
 class Country(BaseModel):
-    country_id: str
-    probability: float
+    country_id: constr(min_length=2, max_length=2)
+    probability: confloat(ge=0.0, le=1.0)
 
 class NationalityPrediction(BaseModel):
     count: int
     name:str
     country: List[Country]
 
-class NationalityResponse(BaseModel):
-    __root__: List[NationalityPrediction]
-    def __iter__(self):
-        return iter(self.__root__)
-    def __getitem__(self, item):
-        return self.__root__[item]
-    def __len__(self):
-        return len(self.__root__)
+class NationalityResponse(RootModel[List[NationalityPrediction]]):
+    pass
