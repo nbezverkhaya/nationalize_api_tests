@@ -67,3 +67,22 @@ test_exceed_max_names_batch_usage → 15 names: expects either 4xx
 - Ensure that the API returns results in the same order as the names were requested.
 - Check how the API handles repeated names in a single batch (returns duplicates or deduplicates)
 - Mock and test rate limit behavior (e.g., 100 names/day quota).
+
+## Open Questions / Documentation Gaps
+
+During testing, one gap in the official documentation of the **Batch Usage** endpoint was identified:
+
+- The docs state: *“The API allows you to infer the nationality of up to ten names per request.”*
+  However, it is not clearly specified what should happen if more than 10 names are provided:
+- Option A: The API rejects the request with a `422 Unprocessable Content`.
+- Option B: The API silently processes only the first 10 names and returns a `200 OK` with truncated results.
+
+# Current Handling in Tests
+Our test suite accepts both behaviors:
+- If the API returns `422`, the test considers it valid.
+- If the API returns `200 OK`, the test verifies that no more than 10 results are included in the response.
+
+This dual-handling ensures that the test suite remains robust against both possible implementations until the API behavior is clarified.
+
+# Recommendation
+It would be beneficial to clarify this behavior in the official API documentation, so that test cases and client applications can rely on a well-defined contract.
