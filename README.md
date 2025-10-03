@@ -64,7 +64,7 @@ test_no_name_parameter_negative → verifies behavior when name[] is missing.
 test_empty_name_parameter_edge → verifies empty name[] returns 200 with a well-formed item (echo "", structure valid).
 test_edge_names_are_handled → parametrized: special chars, digits, spaces, emoji, very long; expects 200 + valid structure + echo.
 test_max_names_batch_usage → verifies request with 10 names.
-test_exceed_max_names_batch_usage → 15 names: expects either 4xx
+test_exceed_max_names_batch_usage → 15 names: expects either 422
 
 ## Future Enhancements
 - Verify if `country` results are sorted by probability (descending).
