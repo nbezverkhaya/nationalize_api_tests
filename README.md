@@ -13,12 +13,16 @@ The tests cover:
 ---
 
 ## Project Structure
-├── conftest.py # Pytest fixtures (api_client, base_url)
-├── models.py # Pydantic models for API response validation
-├── test_nationalize.py # Main test suite
-├── requirements.txt # Dependencies list
-└── README.md # This file
 
+├── conftest.py # Pytest fixtures (api_client, base_url)
+
+├── models.py # Pydantic models for API response validation
+
+├── test_nationalize.py # Main test suite
+
+├── requirements.txt # Dependencies list
+
+└── README.md # This file
 
 ---
 
@@ -77,12 +81,12 @@ During testing, one gap in the official documentation of the **Batch Usage** end
 - Option A: The API rejects the request with a `422 Unprocessable Content`.
 - Option B: The API silently processes only the first 10 names and returns a `200 OK` with truncated results.
 
-# Current Handling in Tests
+### Current Handling in Tests
 Our test suite accepts both behaviors:
 - If the API returns `422`, the test considers it valid.
 - If the API returns `200 OK`, the test verifies that no more than 10 results are included in the response.
 
 This dual-handling ensures that the test suite remains robust against both possible implementations until the API behavior is clarified.
 
-# Recommendation
+### Recommendation
 It would be beneficial to clarify this behavior in the official API documentation, so that test cases and client applications can rely on a well-defined contract.
