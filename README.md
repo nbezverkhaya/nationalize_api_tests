@@ -58,13 +58,13 @@ The tests cover:
 
 ## Scenarios
 
-test_single_name_batch_usage_success → verifies a single name[] returns a valid response.
-test_multiple_names_batch_usage_success → verifies multiple names (≤10).
-test_no_name_parameter_negative → verifies behavior when name[] is missing.
-test_empty_name_parameter_edge → verifies empty name[] returns 200 with a well-formed item (echo "", structure valid).
-test_edge_names_are_handled → parametrized: special chars, digits, spaces, emoji, very long; expects 200 + valid structure + echo.
-test_max_names_batch_usage → verifies request with 10 names.
-test_exceed_max_names_batch_usage → 15 names: expects either 422
+- test_single_name_batch_usage_success → verifies a single name[] returns a valid response.
+- test_multiple_names_batch_usage_success → verifies multiple names (≤10).
+- test_no_name_parameter_negative → verifies behavior when name[] is missing.
+- test_empty_name_parameter_edge → verifies empty name[] returns 200 with a well-formed item (echo "", structure valid).
+- test_edge_names_are_handled → parametrized: special chars, digits, spaces, emoji, very long; expects 200 + valid structure + echo.
+- test_max_names_batch_usage → verifies request with 10 names.
+- test_exceed_max_names_batch_usage → 15 names: expects either 422
 
 ## Future Enhancements
 - Verify if `country` results are sorted by probability (descending).
