@@ -56,6 +56,7 @@ def test_duplicate_names_remain_in_batch_success(api_client, base_url):
 def test_max_names_batch_success(api_client, base_url):
     names = [f"name{i}" for i in range(1, 11)]
     r = api_client.get(base_url, params={"name[]": names})
+    print(f"[info] elapsed: {r.elapsed.total_seconds() * 1000:.0f} ms")  # just for inf
     assert r.status_code == 200
 
     items = _validate_response(r.json())
@@ -77,3 +78,16 @@ def test_exceed_max_names_batch_negative(api_client, base_url):
     assert r.status_code == 200
     items = _validate_response(r.json())
     assert len(items) <= 10
+
+
+@pytest.mark.xfail(reason="Docs do not specify if `country` results are sorted by probability.")
+def test_country_probabilities_sorted(api_client, base_url):
+    name = "johnson"
+    r = api_client.get(base_url, params={"name[]": name})
+    assert r.status_code == 200
+
+    items = _validate_response(r.json())
+    assert len(items) == 1
+
+    probs = [c.probability for c in items[0].country]
+    assert probs == sorted(probs, reverse=True)
