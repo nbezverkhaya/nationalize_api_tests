@@ -1,6 +1,5 @@
-from typing import List, Optional
-
-from pydantic import BaseModel, RootModel, constr, confloat
+from typing import List
+from pydantic import BaseModel, RootModel, constr, confloat, Field
 
 class Country(BaseModel):
     country_id: constr(min_length=2, max_length=2, pattern="^[A-Za-z]{2}$")
@@ -8,8 +7,8 @@ class Country(BaseModel):
 
 class NationalityPrediction(BaseModel):
     count: int
-    name:str
-    country: List[Country]
+    name: str
+    country: List[Country] = Field(default_factory=list, min_length=0, max_length=5)
 
-class NationalityResponse(RootModel[List[NationalityPrediction]]):
+class NationalityResponse(RootModel[list[NationalityPrediction]]):
     pass

@@ -64,12 +64,12 @@ The tests cover:
 - test_empty_name_parameter_edge → verifies empty name[] returns 200 with a well-formed item (echo "", structure valid).
 - test_edge_names_are_handled → parametrized: special chars, digits, spaces, emoji, very long; expects 200 + valid structure + echo.
 - test_max_names_batch_usage → verifies request with 10 names.
-- test_exceed_max_names_batch_usage → 15 names: expects either 422
+- test_exceed_max_names_batch_usage → 15 names: expects 422
 
 ## Future Enhancements
-- Verify if `country` results are sorted by probability (descending).
-- Ensure that the API returns results in the same order as the names were requested.
-- Check how the API handles repeated names in a single batch (returns duplicates or deduplicates)
+- Verify if `country` results are sorted by probability (descending). ?
+- Check how the API handles repeated names in a single batch (returns duplicates or deduplicates) +
+- час виконання заппрса
 - Mock and test rate limit behavior (e.g., 100 names/day quota).
 
 ## Open Questions / Documentation Gaps
